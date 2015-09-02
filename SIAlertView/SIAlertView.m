@@ -10,6 +10,23 @@
 #import "UIWindow+SIUtils.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface NSString (Contains)
+- (BOOL)myContainsString:(NSString*)other;
+
+
+@end
+
+
+@implementation NSString (Contains)
+
+
+- (BOOL)myContainsString:(NSString*)other {
+    NSRange range = [self rangeOfString:other];
+    return range.length != 0;
+}
+
+@end
+
 NSString *const SIAlertViewWillShowNotification = @"SIAlertViewWillShowNotification";
 NSString *const SIAlertViewDidShowNotification = @"SIAlertViewDidShowNotification";
 NSString *const SIAlertViewWillDismissNotification = @"SIAlertViewWillDismissNotification";
@@ -937,7 +954,7 @@ static SIAlertView *__si_alert_current_view;
     if (self.message) {
         if (!self.messageLabel) {
             self.messageLabel = [[UILabel alloc] initWithFrame:self.bounds];
-            if([self.message containsString:@"\n"]){
+            if([self.message myContainsString:@"\n"]){
                 self.messageLabel.textAlignment = NSTextAlignmentLeft;
             }else{
                  self.messageLabel.textAlignment = NSTextAlignmentCenter;
@@ -1182,6 +1199,8 @@ static SIAlertView *__si_alert_current_view;
         }
     }
 }
+
+
 
 # pragma mark -
 # pragma mark Enable parallax effect (iOS7 only)
